@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_ui/common/repositories/common_firebase_storage_repository.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_ui/features/auth/screens/user_information_screen.dart';
+import 'package:whatsapp_ui/models/user_model.dart';
+import 'package:whatsapp_ui/screens/mobile_layout_screen.dart';
 
 final AuthRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -63,6 +69,45 @@ class AuthRepository {
       );
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
+    }
+  }
+
+  void saveUserToFirebase({
+    required String name,
+    required File? profilePic,
+    required ProviderRef ref,
+    required BuildContext context,
+  }) async {
+    try {
+      String uid = auth.currentUser!.uid;
+      String photoUrl =
+          'https://www.themoviedb.org/t/p/w440_and_h660_face/uJYYizSuA9Y3DCs0qS4qWvHfZg4.jpg';
+      if (profilePic != null) {
+        photoUrl = await ref
+            .read(commonFirebaseStorageRepositoryProvider)
+            .storeFileToStorage(
+              'profilePic/$uid',
+              profilePic,
+            );
+      }
+      var user = UserModel(
+        name: name,
+        uid: uid,
+        profilePic: photoUrl,
+        isOnline: true,
+        phoneNumber: auth.currentUser!.uid,
+        groupId: [],
+      );
+
+      await firestore.collection('users').doc(uid).set(user.toMap());
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MobileLayoutScreen(),
+          ),
+          (route) => false);
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
     }
   }
 }
