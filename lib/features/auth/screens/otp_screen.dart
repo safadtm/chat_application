@@ -12,7 +12,7 @@ class OTPScreen extends ConsumerWidget {
   }) : super(key: key);
 
   void verifyOTP(WidgetRef ref, BuildContext context, String userOTP) {
-    ref.read(AuthControllerProvider).verifyOTP(
+    ref.read(authControllerProvider).verifyOTP(
           context,
           verificationId,
           userOTP,

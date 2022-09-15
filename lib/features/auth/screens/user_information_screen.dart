@@ -30,7 +30,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
   void storeUserData() async {
     String name = nameController.text.trim();
     if (name.isNotEmpty) {
-      ref.read(AuthControllerProvider).saveUserDataToFirebase(
+      ref.read(authControllerProvider).saveUserDataToFirebase(
             context,
             name,
             image,
@@ -52,7 +52,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                   image == null
                       ? const CircleAvatar(
                           backgroundImage: NetworkImage(
-                            'https://www.themoviedb.org/t/p/w440_and_h660_face/uJYYizSuA9Y3DCs0qS4qWvHfZg4.jpg',
+                            'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png',
                           ),
                           radius: 64,
                         )

@@ -47,6 +47,7 @@ class MyApp extends ConsumerWidget {
               return const MobileLayoutScreen();
             },
             error: (err, trace) {
+              //  print(err);
               return ErrorScreen(
                 error: err.toString(),
               );

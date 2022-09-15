@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.whatsapp_ui">
+    
+      <uses-permission android:name="android.permission.INTERNET"/> 
+
    <application
         android:label="whatsapp_ui"
         android:icon="@mipmap/ic_launcher">
