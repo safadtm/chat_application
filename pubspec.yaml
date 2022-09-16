@@ -38,6 +38,7 @@ dependencies:
   flutter_contacts: ^1.1.5
   flutter_riverpod: ^1.0.4
   image_picker: ^0.8.5+3
+  intl: ^0.17.0
   json_serializable: ^6.3.2
   uuid: ^3.0.6
 
