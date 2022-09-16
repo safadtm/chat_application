@@ -1,12 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/models/chat_contact.dart';
 import 'package:whatsapp_ui/models/message.dart';
 import 'package:whatsapp_ui/models/user_model.dart';
+
+final chatRepositoryProvider = Provider(
+  (ref) => ChatRepository(
+    firestore: FirebaseFirestore.instance,
+    auth: FirebaseAuth.instance,
+  ),
+);
 
 class ChatRepository {
   final FirebaseFirestore firestore;
@@ -79,7 +87,27 @@ class ChatRepository {
       isSeen: false,
     );
     // users -> sender id ->reciever id -> messages -> message id -> store message
-    // users -> eciever id  -> sender id -> messages -> message id -> store message
+    await firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .doc(recieverUserId)
+        .collection('messages')
+        .doc(messageId)
+        .set(
+          message.toMap(),
+        );
+    // users -> reciever id  -> sender id -> messages -> message id -> store message
+    await firestore
+        .collection('users')
+        .doc(recieverUserId)
+        .collection('chats')
+        .doc(auth.currentUser!.uid)
+        .collection('messages')
+        .doc(messageId)
+        .set(
+          message.toMap(),
+        );
   }
 
   void sendTextMessage({
