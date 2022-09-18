@@ -73,17 +73,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
-  void selectGIF() async {
-    final gif = await pickGIF(context);
-    if (gif != null) {
-      ref.read(chatControllerProvider).sendGIFMessage(
-            context,
-            gif.url,
-            widget.recieverUserId,
-          );
-    }
-  }
-
   void hideEmojiContainer() {
     setState(() {
       isShowingEmojiContainer = false;
@@ -142,24 +131,13 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                   prefixIcon: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: toggleEmojiKeyboardContainer,
-                            icon: const Icon(
-                              Icons.emoji_emotions,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: selectGIF,
-                            icon: const Icon(
-                              Icons.gif,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
+                      width: 50,
+                      child: IconButton(
+                        onPressed: toggleEmojiKeyboardContainer,
+                        icon: const Icon(
+                          Icons.emoji_emotions,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),

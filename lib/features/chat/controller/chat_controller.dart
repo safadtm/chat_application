@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
@@ -68,25 +66,6 @@ class ChatController {
             sendUserData: value!,
             messageEnum: messageEnum,
             ref: ref,
-          ),
-        );
-  }
-
-  void sendGIFMessage(
-    BuildContext context,
-    String gifUrl,
-    String recieverUserId,
-  ) {
-    int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
-    String gitUrlPart = gifUrl.substring(gifUrlPartIndex);
-    String newgifUrl = 'https://i.giphy.com/media/$gitUrlPart/200.gif';
-
-    ref.read(userDataAuthProvider).whenData(
-          (value) => chatRepository.sendGIFMessage(
-            context: context,
-            gifUrl: newgifUrl,
-            recieverUserId: recieverUserId,
-            senderUser: value!,
           ),
         );
   }
