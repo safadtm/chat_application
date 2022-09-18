@@ -40,6 +40,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_contacts: ^1.1.5
+  flutter_platform_widgets: 1.11.1
   flutter_riverpod: ^1.0.4
   image_picker: ^0.8.5+3
   intl: ^0.17.0
