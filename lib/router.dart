@@ -8,6 +8,9 @@ import 'package:whatsapp_ui/features/auth/screens/user_information_screen.dart';
 import 'package:whatsapp_ui/features/select_contacts/screens/select_contacs_screen.dart';
 import 'package:whatsapp_ui/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatsapp_ui/features/status/screens/confirm_status_screen.dart';
+import 'package:whatsapp_ui/models/status_model.dart';
+
+import 'features/status/screens/status_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -45,6 +48,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ConfirmStatusScreen(
           file: file,
+        ),
+      );
+    case StatusScreen.routeName:
+      final status = settings.arguments as Status;
+      return MaterialPageRoute(
+        builder: (context) => StatusScreen(
+          status: status,
         ),
       );
 
