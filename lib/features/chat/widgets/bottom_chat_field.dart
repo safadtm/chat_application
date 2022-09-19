@@ -8,8 +8,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:whatsapp_ui/colors.dart';
 import 'package:whatsapp_ui/common/enums/message_enum.dart';
+import 'package:whatsapp_ui/common/providers/message_reply_provider.dart';
 import 'package:whatsapp_ui/common/utils/utils.dart';
 import 'package:whatsapp_ui/features/chat/controller/chat_controller.dart';
+import 'package:whatsapp_ui/features/chat/widgets/message_replay_preview.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -61,7 +63,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       );
     } else {
       var tempDir = await getTemporaryDirectory();
-      var path = '${tempDir.path}/flutter_sound.acc';
+      var path = '${tempDir.path}/flutter_sound.aac';
       if (!isRecorderInit) {
         return;
       }
@@ -146,8 +148,12 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   @override
   Widget build(BuildContext context) {
+    final messageReplay = ref.watch(messageReplyProvider);
+    final isShowMessageReplay = messageReplay != null;
+
     return Column(
       children: [
+        isShowMessageReplay ? const MessageReplayPreview() : const SizedBox(),
         Row(
           children: [
             Expanded(
